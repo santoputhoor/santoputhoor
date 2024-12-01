@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santo Puthoor | IT Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header id="header">
+        <div class="center-content">
+            <div class="photo-container">
+                <img src="https://media.licdn.com/dms/image/v2/D4D03AQF2LJyKQX7HFw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1691744328718?e=1738800000&v=beta&t=o56dFPkas4vmmg1n7uiqDmapUZoLk8jOZlkSObUcnas"
+                     alt="Santo Puthoor" class="profile-photo">
+            </div>
+            <div class="vertical-line"></div>
+            <div class="name-container">
+                <h1 class="name">Santo Puthoor</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- About Section -->
+        <section class="about">
+            <h2>About Me</h2>
+            <p>
+                Accomplished IT Director renowned for spearheading the development of cutting-edge software solutions.
+                Extensive expertise in .NET programming, database optimization, and team leadership.
+            </p>
+        </section>
+
+        <!-- Certifications Section -->
+        <section class="certifications">
+            <h2>Certifications</h2>
+            <ul>
+                <li><a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=429F290765A81607731724442B7C5B5BF31C776902C1E4FDD3BB2480C2EFEB36">Oracle Certification</a></li>
+                <li><a href="https://www.credly.com/badges/22b97c15-19e2-4a0b-b691-667af4b0cfc5/linked_in_profile">Microsoft Certification</a></li>
+            </ul>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section class="work-experience">
+            <h2>Work Experience</h2>
+            <ul>
+                <li><strong>IT Director</strong> | Techorbit Trading LLC, Dubai (2019 - Present)</li>
+                <li><strong>IT Director</strong> | Waypoint Systems FZCO, Dubai (2013 - 2019)</li>
+                <li><strong>System Analyst</strong> | National Trading and Development Est, Dubai (2003 - 2013)</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 Santo Puthoor. All Rights Reserved.</p>
+        <a href="https://www.linkedin.com/in/santo-puthoor-25545536/" target="_blank">Visit My LinkedIn</a>
+    </footer>
+
+    <script>
+        // GSAP Animations
+        gsap.from(".photo-container", { duration: 1.5, scale: 0, ease: "bounce.out" });
+        gsap.from(".vertical-line", { duration: 1.5, height: 0, ease: "power2.out", delay: 0.5 });
+        gsap.from(".name", { duration: 1.5, x: -50, opacity: 0, ease: "power2.out", delay: 1 });
+    
+        // Move image and name to the top
+        setTimeout(() => {
+            gsap.to("#header", {
+                duration: 1.5,
+                y: -window.innerHeight + 70,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    document.getElementById("header").classList.add("sticky");
+                }
+            });
+    
+            // Redirect after animation (7 seconds total)
+            setTimeout(() => {
+                window.location.href = "santoputhoor.html";
+            }, 2000); // Adjust time as needed
+        }, 5000); // Initial delay for animation
+    </script>
+    
+</body>
+
+</html>

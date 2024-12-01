@@ -192,6 +192,20 @@
     logoContainer.appendChild(img);
   });
 
+  // Pause Animations and Show Enter Button
+enterButton.addEventListener('click', () => {
+  animationsPaused = false;
+  enterButton.style.display = "none";
+  typeIndex = 0;
+  playCount = 0;
+  textElement.textContent = "";
+  typeWriter();
+
+  // Redirect to home.html
+  window.location.href = 'home.html';
+});
+
+
   document.querySelectorAll('.logo').forEach(logo => {
     const randomKeyframes = `
         @keyframes moveLogo {
