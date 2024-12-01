@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santo Puthoor</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: lime;
+      font-family: monospace;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #typewriter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: lime;
+      white-space: nowrap;
+    }
+
+    #cursor {
+      display: inline-block;
+      animation: blink 0.6s step-end infinite;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .logo {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      opacity: 0.8;
+    }
+
+    #enterButton {
+      display: none;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      color: lime;
+      background-color: black;
+      border: 2px solid lime;
+      cursor: pointer;
+    }
+
+    #enterButton {
+      display: none;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      color: lime;
+      background-color: black;
+      border: 2px solid lime;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #enterButton:hover {
+      background-color: lime;
+      color: black;
+    }
+
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<canvas id="matrixCanvas"></canvas>
+<div id="typewriter"><span id="text"></span><span id="cursor">_</span></div>
+<button id="enterButton">Enter</button>
+<div class="logo-container"></div>
+
+<script>
+  // Matrix Rain Effect
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = Array.from({ length: columns }, () => 1);
+
+  let animationsPaused = false;
+
+  function drawMatrix() {
+    if (animationsPaused) return;
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0F0";
+    ctx.font = `${fontSize}px monospace`;
+
+    drops.forEach((y, index) => {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      const x = index * fontSize;
+      ctx.fillText(text, x, y * fontSize);
+
+      if (y * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[index] = 0;
+      }
+      drops[index]++;
+    });
+  }
+
+  setInterval(drawMatrix, 50);
+
+  // Typewriter Effect
+  const name = "SANTO PUTHOOR";
+  const textElement = document.getElementById('text');
+  const enterButton = document.getElementById('enterButton');
+  let typeIndex = 0;
+  let playCount = 0;
+
+  function typeWriter() {
+    if (animationsPaused) return;
+
+    if (typeIndex < name.length) {
+      textElement.textContent += name[typeIndex];
+      typeIndex++;
+      setTimeout(typeWriter, 150);
+    } else {
+      playCount++;
+      if (playCount < 3) {
+        setTimeout(() => {
+          typeIndex = 0;
+          textElement.textContent = "";
+          typeWriter();
+        }, 1000); // Delay before restarting
+      } else {
+        enterButton.style.display = "block";
+        animationsPaused = true;
+      }
+    }
+  }
+
+  typeWriter();
+
+  // Pause Animations and Show Enter Button
+  enterButton.addEventListener('click', () => {
+    animationsPaused = false;
+    enterButton.style.display = "none";
+    typeIndex = 0;
+    playCount = 0;
+    textElement.textContent = "";
+    typeWriter();
+  });
+
+  // Logos Animation
+  const logos = [
+    "dotnet.ico", "chatgpt.png", "visualstudio.png", "java.png",
+    "oracle.png", "microsoft.png", "python.png",
+    "php.png", "blazor.png"
+  ];
+
+  const logoContainer = document.querySelector('.logo-container');
+
+  logos.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.classList.add('logo');
+    img.style.left = `${Math.random() * window.innerWidth}px`;
+    img.style.animation = `moveLogo ${2 + Math.random() * 3}s linear infinite`;
+    logoContainer.appendChild(img);
+  });
+
+  document.querySelectorAll('.logo').forEach(logo => {
+    const randomKeyframes = `
+        @keyframes moveLogo {
+          from {
+            transform: translateY(-50px);
+          }
+          to {
+            transform: translateY(${window.innerHeight + 50}px);
+          }
+        }
+      `;
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(randomKeyframes, styleSheet.cssRules.length);
+  });
+</script>
+</body>
+</html>
